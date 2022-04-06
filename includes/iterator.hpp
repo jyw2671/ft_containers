@@ -1,6 +1,8 @@
 #ifndef ITERATOR_TRAITS_HPP
 #define ITERATOR_TRAITS_HPP
 
+#include <cstddef> // ptrdiff_t 사용
+
 namespace ft {
 
 	// 각 iterator의 catecory를 구분하기 위한 빈 클래스
