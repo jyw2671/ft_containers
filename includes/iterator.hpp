@@ -58,6 +58,10 @@ namespace ft {
 		protected:
 			Iterator current;
 
+		iterator_type base() const {
+			return (current);
+		}
+
 		reference operator*() const {
 			iterator_type temp = current;
 			return (*(--temp));
