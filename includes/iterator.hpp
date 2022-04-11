@@ -58,6 +58,15 @@ namespace ft {
 		protected:
 			Iterator current;
 
+		public:
+			// default constructor
+			reverse_iterator() : current() {}
+			// initialization constructor
+			explicit reverse_iterator (iterator_type it) : current(it) {}
+			// copy / type-cast constructor
+			template <class Iter>
+			reverse_iterator (const reverse_iterator<Iter>& rev_it) : current(rev_it.base()) {}
+
 		iterator_type base() const {
 			return (current);
 		}
