@@ -57,6 +57,59 @@ namespace ft {
 
 		protected:
 			Iterator current;
+
+		reference operator*() const {
+			iterator_type temp = current;
+			return (*(--temp));
+		}
+
+		reverse_iterator operator+ (difference_type n) const {
+			return (reverse_iterator(current - n));
+		}
+
+		reverse_iterator& operator++() {
+			--(this->current);
+			return (*this);
+  		}
+
+		reverse_iterator operator++(int) {
+  			reverse_iterator temp = *this;
+  			++(*this);
+  			return (temp);
+		}
+
+		reverse_iterator& operator+= (difference_type n) {
+			this->current -= n;
+			return (*this);
+  		}
+
+		reverse_iterator operator- (difference_type n) const {
+			return (reverse_iterator(current + n));
+		}
+
+		reverse_iterator& operator--() {
+			++(this->current);
+			return (*this);
+  		}
+
+		reverse_iterator operator--(int) {
+			reverse_iterator temp = *this;
+			--(*this);
+			return (temp);
+		}
+
+		reverse_iterator& operator-= (difference_type n) {
+			this->current += n;
+			return (*this);
+  		}
+
+		pointer operator->() const {
+			return &(operator*());
+		}
+
+		reference operator[] (difference_type n) const {
+			return (this->current[-n - 1]);
+		}
 	}; // class reverse_iterator
 } // namespace ft
 
