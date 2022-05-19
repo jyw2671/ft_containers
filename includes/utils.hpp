@@ -76,6 +76,26 @@ namespace ft{
 
 	template <>
 	struct is_integral_type<unsigned long long int> : public integral_traits<true, bool> {};
+
+	// equal
+	/* first1, last1
+		첫 번째 시퀀스의 초기 및 최종 위치에 반복자를 입력합니다 .
+		사용된 범위는 first1 이 가리키는 요소를 포함 하지만 last1 이 가리키는 요소가 아닌
+		first1 과 last1[first1,last1) 사이의 모든 요소를 ​​포함합니다 .
+	* first2
+		두 번째 시퀀스의 초기 위치에 반복자를 입력합니다 .
+		비교에는 범위에 있는 요소 수만큼 이 시퀀스의 요소가 포함됩니다 [first1,last1)
+	*/
+	template <class InputIterator1, class InputIterator2>
+	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
+		while (first1 != last1) {
+			if (!(*first1! == *first2))
+				return false;
+			++first1;
+			++first2;
+		}
+		return true;
+	};
 }	// namespace ft
 
 
