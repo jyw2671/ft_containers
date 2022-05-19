@@ -96,6 +96,25 @@ namespace ft{
 		}
 		return true;
 	};
+
+	// iterator범위 사이에서 동일한지 check. : pred로 비교.
+	/* pred
+		두 요소를 인수로 받아들이고(같은 순서로 두 시퀀스 각각 중 하나) 부울로 변환 가능한 값을 반환하는 이진 함수입니다.
+		반환되는 값은 요소가 이 함수의 컨텍스트에서 일치하는 것으로 간주되는지 여부를 나타냅니다.
+		함수는 인수를 수정하지 않아야 한다.
+		이것은 함수 포인터 또는 함수 객체일 수 있다.
+	*/
+	template < class InputIterator1, class InputIterator2, class BinaryPredicate >
+	bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
+				BinaryPredicate pred) {
+		while (first1 != last1) {
+			if (!pred(*first1, *first2))
+				return false;
+			++first1;
+			++first2;
+		}
+		return true;
+	}
 }	// namespace ft
 
 
