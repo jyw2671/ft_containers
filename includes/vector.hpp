@@ -110,7 +110,7 @@ namespace ft {
 			}
 
 			// element의 갯수가 아닌, 할당받은 메모리의 갯수. (잠재적 크기)
-			size_type capacity() const { return (this->_end_of_capacity - this->_start); }
+			size_type capacity() const { return (this->_end_capacity - this->_start); }
 			bool empty() const { return (this->_start == this->_end); }
 
 			// 벡터의 용량(재할당 없이 벡터가 보유할 수 있는 총 요소 수)을 보다 크거나 같은 값으로 늘 new_cap립니다.
@@ -121,17 +121,17 @@ namespace ft {
 				else if (n > this->capacity()) {
 					pointer prev_start = this->_start;
 					pointer prev_end = this->_end;
-					pointer prev_end_of_capacity = this->_end_of_capacity;
+					pointer prev_end_capacity = this->_end_capacity;
 
 					this->_start = this->_alloc.allocate(n);
 					this->_end = this->_start;
-					this->_end_of_capacity = this->_start + n;
+					this->_end_capacity = this->_start + n;
 					pointer tmp = prev_start;
 					while (tmp != prev_end) {
 						this->_alloc.construct(this->_end++, *tmp);
 						this->_alloc.destroy(tmp++);
 					}
-					this->_alloc.deallocate(prev_start, prev_end_of_capacity - prev_start);
+					this->_alloc.deallocate(prev_start, prev_end_capacity - prev_start);
 				}
 			}
 	}; // class vector
