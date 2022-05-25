@@ -11,6 +11,7 @@ namespace ft {
 			typedef T value_type;
 			typedef Allocator allocator_type;
 			typedef typename allocator_type::pointer pointer;
+			typedef typename allocator_type::const_pointer const_pointer;
 			typedef ft::vector_iterator< T > iterator;
 			typedef ft::vector_iterator< const T > const_iterator;
 			typedef ft::reverse_iterator< iterator > reverse_iterator;
@@ -160,6 +161,51 @@ namespace ft {
 			// 벡터의 마지막 element를 리턴.
 			reference back() { return (*(this->_end - 1)); }
 			const_reference back() const { return (*(this->_end - 1)); }
+
+			//assign range
+			//벡터에 새 내용을 할당하고 현재 내용을 교체하고 그에 따라 크기를 수정한다.
+			template < typename InputIterator >
+			void assign(InputIterator first, InputIterator last,
+						typename ft::enable_if< !ft::is_integral< InputIterator >::value,
+						InputIterator >::type * = NULL) {
+				this->clear();
+				size_type n = ft::distance(first, last);
+				if (n <= this->capacity()) {
+					while (n--)
+						this->_alloc.construct(this->_end++, *first++);
+				}
+				else {
+					pointer prev_begin = this->_begin;
+					pointer prev_end_capacity = this->_end_capacity;
+
+					this->_begin = this->_alloc.allocate(n);
+					this->_end = this->_begin;
+					this->_end_capacity = this->_begin + n;
+					const_pointer tmp = &(*first);
+					while(tmp != &(*last))
+						this->_alloc.construct(this->_end++, *tmp++);
+					this->_alloc.deallocate(prev_begin, prev_end_capacity - prev_begin);
+				}
+			}
+			//assign fill
+			void assign(size_type n, const value_type &val) {
+				this->clear();
+				if (n <= this->capacity()) {
+					while (n--)
+						this->_alloc.construct(this->_end++, val);
+				}
+				else {
+					pointer prev_begin = this->_begin;
+					pointer prev_end_capacity = this->_end_capacity;
+
+					this->_begin = this->_alloc.allocate(n);
+					this->_end = this->_begin;
+					this->_end_capacity = this->_begin + n;
+					while (n--)
+						this->_alloc.construct(this->_end++, val);
+					this->_alloc.deallocate(prev_begin, prev_end_capacity - prev_begin);
+				}
+			}
 	}; // class vector
 }  // namespace ft
 
