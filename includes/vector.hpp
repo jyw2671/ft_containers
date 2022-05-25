@@ -67,6 +67,12 @@ namespace ft {
 				this->_end_capacity = this->_end;
 			}
 
+			// destructor
+			~vector() {
+				this->clear();
+				this->_alloc.deallocate(this->_start, this->capacity());
+			}
+
 			iterator begin() { return (iterator(this->_begin)); }
 			const_iterator begin() const { return (const_iterator(this->_begin)); }
 			iterator end() { return (iterator(this->_end)); }
