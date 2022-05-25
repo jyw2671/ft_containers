@@ -73,6 +73,15 @@ namespace ft {
 				this->_alloc.deallocate(this->_start, this->capacity());
 			}
 
+			// Assign content
+			vector &operator=(const vector &x) {
+				if (this != &x) {
+					this->clear();
+					this->assign(x.begin(), x.end());
+				}
+				return (*this);
+			}
+
 			iterator begin() { return (iterator(this->_begin)); }
 			const_iterator begin() const { return (const_iterator(this->_begin)); }
 			iterator end() { return (iterator(this->_end)); }
