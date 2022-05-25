@@ -134,6 +134,32 @@ namespace ft {
 					this->_alloc.deallocate(prev_begin, prev_end_capacity - prev_begin);
 				}
 			}
+
+			//access element
+			reference operator[](size_type n) { return (*(this->_begin + n)); }
+			//const access element
+			const_reference operator[](size_type n) const { return (*(this->_begin + n)); }
+
+			//access element
+			reference at(size_type n) {
+				if (n >= this->size())
+					throw(std::out_of_range("Error: ft::vector::at"));
+				return ((*this)[n]);
+			}
+			//const access element
+			const_reference at(size_type n) const {
+				if (n >= this->size())
+					throw(std::out_of_range("Error: ft::vector::at"));
+				return ((*this)[n]);
+			}
+
+			// 벡터의 첫번째 element를 리턴.
+			reference front() { return (*(this->_begin)); }
+			const_reference front() const { return (*(this->_begin)); }
+
+			// 벡터의 마지막 element를 리턴.
+			reference back() { return (*(this->_end - 1)); }
+			const_reference back() const { return (*(this->_end - 1)); }
 	}; // class vector
 }  // namespace ft
 
