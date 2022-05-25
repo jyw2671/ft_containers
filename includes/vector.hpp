@@ -206,6 +206,26 @@ namespace ft {
 					this->_alloc.deallocate(prev_begin, prev_end_capacity - prev_begin);
 				}
 			}
+
+			// 벡터의 뒤에 새로운 element를 추가한다.
+			// 늘어난 벡터의 크기가 capacity를 넘어갈 경우, 이전 capacity * 2의 크기로 늘어남.
+			void push_back(const value_type &val) {
+				if (this->_end == this->_end_capacity) {
+					if (this->size() == 0)
+						this->reserve(1);
+					else
+						this->reserve(this->capacity() * 2);
+				}
+				this->_alloc.construct(this->_end++, val);
+			}
+			// 벡터의 맨 뒤 요소를 하나 제거한다.
+			void pop_back() { this->_alloc.destroy(--this->_end); }
+
+			void clear() {
+				while (this->_end != this->_begin) {
+					this->_alloc.destroy(--this->_end);
+				}
+			}
 	}; // class vector
 }  // namespace ft
 
