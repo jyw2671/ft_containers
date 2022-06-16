@@ -91,11 +91,11 @@ namespace ft{
 	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
 		while (first1 != last1) {
 			if (!(*first1! == *first2))
-				return false;
+				return (false);
 			++first1;
 			++first2;
 		}
-		return true;
+		return (true);
 	};
 
 	// iterator범위 사이에서 동일한지 check. : pred로 비교.
@@ -110,11 +110,11 @@ namespace ft{
 				BinaryPredicate pred) {
 		while (first1 != last1) {
 			if (!pred(*first1, *first2))
-				return false;
+				return (false);
 			++first1;
 			++first2;
 		}
-		return true;
+		return (true);
 	}
 
 	// lexicographical compare
