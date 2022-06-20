@@ -2,7 +2,9 @@
 #define VECTOR_HPP
 
 #include <memory>
+#include <stdexcept>
 #include "vector_iterator.hpp"
+#include "utils.hpp"
 
 namespace ft {
 	template < typename T, typename Allocator = std::allocator< T > >
@@ -245,16 +247,34 @@ namespace ft {
 
 			//2.fill element insert
 			void insert(iterator position, size_type n, const value_type &val) {
-				size_type mv_back_count = this->_end - &(*position);
-
-				this->resize(this->size() + n);
-				pointer tmp = this->_end - 1;
-				for (; mv_back_count > 0; mv_back_count--, tmp--) {
-					this->_alloc.construct(tmp, *(tmp - n));
-					this->_alloc.destroy(tmp - n);
+				if (this->size() + n <= this->capacity()) {
+					pointer val_tmp = this->_end;
+					size_type range = this->_end - &(*position);
+					this->_end += n;
+					pointer tmp = this->_end;
+					while (range--)
+						this->_alloc.construct(--tmp, *(--val_tmp));
+					while (n--)
+						this->_alloc.construct(--tmp, val);
 				}
-				while (n--) {
-					this->_alloc.construct(tmp--, val);
+				else {
+					pointer tmp = this->_begin;
+					size_type _size = n + this->size();
+					size_type front_tmp = &(*position) - this->_begin;
+					size_type back_tmp = _end - &(*position);
+					this->_begin = _alloc.allocate(_size);
+					this->_end = _begin;
+					this->_end_capacity = this->_begin + _size;
+					while (front_tmp--) {
+						_alloc.construct(this->_end++, *tmp);
+						_alloc.destroy(tmp++);
+					}
+					while (n--)
+						_alloc.construct(this->_end++, val);
+					while (back_tmp--) {
+						_alloc.construct(this->_end++, *tmp);
+						_alloc.destroy(tmp++);
+					}
 				}
 			}
 
@@ -274,13 +294,13 @@ namespace ft {
 						this->_alloc.construct(--tmp, *(--last));
 				}
 				else {
-					pointer tmp = this->_start;
+					pointer tmp = this->_begin;
 					size_type _size = n + this->size();
-					size_type front_tmp = &(*position) - this->_start;
+					size_type front_tmp = &(*position) - this->_begin;
 					size_type back_tmp = this->_end - &(*position);
-					this->_start = this->_alloc.allocate(_size);
-					this->_end = this->_start;
-					this->_end_of_capacity = this->_start + _size;
+					this->_begin = this->_alloc.allocate(_size);
+					this->_end = this->_begin;
+					this->_end_capacity = this->_begin + _size;
 					while (front_tmp--) {
 						_alloc.construct(this->_end++, *tmp);
 						_alloc.destroy(tmp++);
