@@ -4,6 +4,15 @@
 #include "iterator.hpp"
 
 namespace ft{
+	template <typename InputIterator>
+	typename ft::iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
+	{
+		typename ft::iterator_traits<InputIterator>::difference_type n = 0;
+		while (first++ != last)
+			n++;
+		return (n);
+	}
+
 	// The type T is enabled as member type enable_if::type if Cond is true.
 	template <bool Cond, typename T = void>
 	struct enable_if {};
@@ -90,7 +99,7 @@ namespace ft{
 	template <class InputIterator1, class InputIterator2>
 	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
 		while (first1 != last1) {
-			if (!(*first1! == *first2))
+			if (!(*first1 == *first2))
 				return (false);
 			++first1;
 			++first2;
